@@ -25,7 +25,7 @@ if(empty($_SESSION['user_id'] && $_SESSION['logged_in'])){
 
 include "header.php" ;
 
-if($_POST['search']){
+if(!empty($_POST['search'])){
   setcookie('search', $_POST['search'], time() + (86400 * 30), "/");
 }else{
   if(empty($_GET['pageno'])){
