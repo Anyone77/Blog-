@@ -13,7 +13,7 @@
   }
 
 
-  if($_POST['search']){
+  if(!empty($_POST['search'])){
     setcookie('search', $_POST['search'], time() + (86400 * 30), "/");
   }else{
     if(empty($_GET['pageno'])){
