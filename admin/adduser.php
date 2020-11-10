@@ -7,7 +7,7 @@ require "../config/config.php";
 if(!empty($_POST)){
     
     $name = $_POST['name'];
-    $password = $_POST['password'];
+    $password =password_hash( $_POST['password'],PASSWORD_DEFAULT);
     $email = $_POST['email'];
 
     
