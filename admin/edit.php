@@ -14,6 +14,18 @@ $stmt->execute();
     $res = $stmt->fetchAll();
 
     if(!empty($_POST)){
+
+
+      if(empty($_POST['title']) || empty($_POST['title']) ){
+        if(empty($_POST['title'])){
+          $titleError = ' * Fill title';
+        }
+        if(empty($_POST['content'])){
+          $contentError = ' * Fill content';
+        }
+        
+      }else{
+
         $id = $_POST['id'];
         $title = $_POST['title'];
         $content = $_POST['content'];
@@ -47,6 +59,9 @@ $stmt->execute();
             }
 
         }
+
+      }
+        
     }
 
 ?>
@@ -74,10 +89,12 @@ $stmt->execute();
                     <input type="hidden" name="id" value="<?php echo $res[0]['id']?>">
                     <div class="form-group">
                         <label for="">Title</label><br>
-                        <input type="text" class="form-control" name="title" value="<?php echo $res[0]['title']?>" required>
+                        <p style="color:red;"><?php echo empty($titleError) ? '' : $titleError; ?></p>
+                        <input type="text" class="form-control" name="title" value="<?php echo $res[0]['title']?>" >
                     </div>
                     <div class="form-group">
                         <label for="">Content</label><br>
+                        <p style="color:red;"><?php echo empty($contentError) ? '' : $contentError; ?></p>
                         <textarea name="content" class="form-control" id="" cols="30" rows="10"><?php echo $res[0]['content']?></textarea>
                     </div>
                     <div class="form-group">

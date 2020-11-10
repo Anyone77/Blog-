@@ -13,28 +13,47 @@ if(!empty($_POST)){
     $password = $_POST['password'];
     $name = $_POST['name'];
 
-    $sql = $pdo->prepare("SELECT * FROM users WHERE email=:email");
-    $sql->bindValue(":email",$email);
 
-    $sql->execute();
 
-    $result = $sql->fetch(PDO::FETCH_ASSOC);
-
-    if($result['email']){
-        
-        
-        echo "<script>alert('This user email already exist ! ')</script>";
+    if(empty($name) || empty($password) || empty($email) || strlen($password) < 4 ){
+      if(empty($name)){
+        $nameError = ' * Fill name';
+      }
+      if(empty($password)){
+        $passwordError = ' * Fill password';
+      }
+      if(empty($email)){
+        $emailError = ' * Fill email';
+      }
+      if(strlen($password) < 4) {
+        $passwordError = '* Password must be at least 4 ';
+      }
     }else{
 
-        $stmt = $pdo->prepare("INSERT INTO users (name,password,email) VALUES(:name,:password,:email) ");
-        $result = $stmt->execute(
-            array(':name'=>$name , ':password'=>$password , ':email'=>$email  )
-        );
+      $sql = $pdo->prepare("SELECT * FROM users WHERE email=:email");
+      $sql->bindValue(":email",$email);
+  
+      $sql->execute();
+  
+      $result = $sql->fetch(PDO::FETCH_ASSOC);
+  
+      if($result['email']){
+          
+          
+          echo "<script>alert('This user email already exist ! ')</script>";
+      }else{
+  
+          $stmt = $pdo->prepare("INSERT INTO users (name,password,email) VALUES(:name,:password,:email) ");
+          $result = $stmt->execute(
+              array(':name'=>$name , ':password'=>$password , ':email'=>$email  )
+          );
+  
+          if($result){
+              echo "<script>alert('User Registration Successfully ');window.location.href='login.php'; </script>";
+          }
+          
+      }
 
-        if($result){
-            echo "<script>alert('User Registration Successfully ');window.location.href='login.php'; </script>";
-        }
-        
     }
 
        
@@ -71,32 +90,33 @@ if(!empty($_POST)){
 <body class="hold-transition login-page">
 <div class="login-box">
 <div class="login-logo">
-<a href="../../index2.html"><b>Admin</b>Login</a>
+<a href="../../index2.html"><b>User</b> Registration</a>
 </div>
 
 
 <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Horizontal Form</h3>
+                <h3 class="card-title">Registration Form</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form class="form-horizontal" action="register.php" method="post"> 
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="" class="col-sm-3 col-form-label">Email</label><br>
+                    <p style="color:red;"><?php echo empty($nameError) ? '' : $nameError; ?></p>
+    
                         <div class="col-sm-12">
-                        <input type="text" class="form-control" name="name" id="inputEmail3" placeholder="Name" required>
+                        <input type="text" class="form-control" name="name" id="inputEmail3" placeholder="Name">
                         </div>
                   </div>
                   <div class="form-group row">
-                    <label for="" class="col-sm-3 col-form-label">Email</label><br><br>
+                  <p style="color:red;"><?php echo empty($emailError) ? '' : $emailError; ?></p>
                     <div class="col-sm-12">
-                      <input type="email" class="form-control" name="email" id="inputEmail3" placeholder="Email" required>
+                      <input type="email" class="form-control" name="email" id="inputEmail3" placeholder="Email" >
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="" class="col-sm-3 col-form-label">Password</label><br>
+                  <p style="color:red;"><?php echo empty($passwordError) ? '' : $passwordError; ?></p>
                     <div class="col-sm-12">
                       <input type="password" class="form-control" name="password" id="inputPassword3" placeholder="Password">
                     </div>

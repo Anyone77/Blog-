@@ -9,41 +9,57 @@ if(!empty($_POST)){
     $name = $_POST['name'];
     $password = $_POST['password'];
     $email = $_POST['email'];
-   
-
-    $eFit = $pdo->prepare("SELECT * FROM users ORDER BY id DESC ");
-    
-    $eFit->execute();
-    
-    $res = $eFit->fetchAll();
 
     
-    if($res[0]['email'] != $email){
-
-
-        if(empty($_POST['role'])){
-            $role = 0;      
-        }else{
-            $role = 1;
-        }
-
-            $stmt = $pdo->prepare("INSERT INTO users (name,password,email,role) VALUES(:name,:password,:email,:role) ");
-                $result = $stmt->execute(
-                    array(':name'=>$name , ':password'=>$password , ':email'=>$email , ':role'=>$role )
-                );
-            if($result){
-                echo "<script>alert('Add New User Successfully ');window.location.href='userlist.php'; </script>";
-            }
-
-
-
-        
-
+    if(empty($name) || empty($password) || empty($email) || strlen($password) < 4 ){
+      if(empty($name)){
+        $nameError = ' * Fill name';
+      }
+      if(empty($password)){
+        $passwordError = ' * Fill password';
+      }
+      if(empty($email)){
+        $emailError = ' * Fill email';
+      }
+      if(strlen($password) < 4) {
+        $passwordError = '* Password must be at least 4 ';
+      }
     }else{
-        echo "<script>alert('This user email already exit ') </script>";
-    }
 
-   
+      $eFit = $pdo->prepare("SELECT * FROM users ORDER BY id DESC ");
+    
+      $eFit->execute();
+      
+      $res = $eFit->fetchAll();
+  
+      
+      if($res[0]['email'] != $email){
+  
+  
+          if(empty($_POST['role'])){
+              $role = 0;      
+          }else{
+              $role = 1;
+          }
+  
+              $stmt = $pdo->prepare("INSERT INTO users (name,password,email,role) VALUES(:name,:password,:email,:role) ");
+                  $result = $stmt->execute(
+                      array(':name'=>$name , ':password'=>$password , ':email'=>$email , ':role'=>$role )
+                  );
+              if($result){
+                  echo "<script>alert('Add New User Successfully ');window.location.href='userlist.php'; </script>";
+              }
+  
+  
+  
+          
+  
+      }else{
+          echo "<script>alert('This user email already exit ') </script>";
+      }
+  
+
+    }
 
     
 
@@ -74,15 +90,18 @@ if(!empty($_POST)){
                 <form action="adduser.php" method="post" enctype="multipart/form-data" > 
                     <div class="form-group">
                         <label for="">Name</label><br>
-                        <input type="text" class="form-control" name="name" required>
+                        <p style="color:red;"><?php echo empty($nameError) ? '' : $nameError; ?></p>
+                        <input type="text" class="form-control" name="name" >
                     </div>
                     <div class="form-group">
                         <label for="">Password</label><br>
-                        <input type="password" class="form-control" name="password" required>
+                        <p style="color:red;"><?php echo empty($passwordError) ? '' : $passwordError; ?></p>
+                        <input type="password" class="form-control" name="password" >
                     </div>
                     <div class="form-group">
                         <label for="">Email</label><br>
-                        <input type="email" class="form-control" name="email" required>
+                        <p style="color:red;"><?php echo empty($emailError) ? '' : $emailError; ?></p>
+                        <input type="email" class="form-control" name="email" >
                     </div>
 
                     <div class="form-group">

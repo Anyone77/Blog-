@@ -19,6 +19,14 @@ require "../config/config.php";
       
         $comment = $_POST['comment'];
 
+        if(empty($comment)){
+          if(empty($comment)){
+            $commentError = ' * Fill comment';
+          }
+
+        }else{
+
+
         $com = $pdo->prepare("INSERT INTO comments(content,author_id,post_id) VALUES(:content,:author_id,:post_id) ");
         $comRs = $com->execute(
             array(':content'=>$comment , ':author_id'=>$authorid ,':post_id'=>$postid)
@@ -26,6 +34,9 @@ require "../config/config.php";
 
         if($comRs){
           header('location:blogdetail.php?id='.$postid);
+        }
+
+
         }
 
 
@@ -170,6 +181,7 @@ require "../config/config.php";
                   <img class="img-fluid img-circle img-sm" src="../dist/img/user4-128x128.jpg" alt="Alt Text">
                   <!-- .img-push is used to add margin to elements next to floating images -->
                   <div class="img-push">
+                  <p style="color:red;"><?php echo empty($commentError) ? '' : $commentError; ?></p><br>
                     <input type="text" name="comment" class="form-control form-control-sm" placeholder="Press enter to post comment">
                   </div>
                 </form>

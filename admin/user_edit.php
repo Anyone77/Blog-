@@ -8,29 +8,59 @@ if($_SESSION['role'] != 1){
   header('location:login.php');
 }
 
+
+
+
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id =".$_GET['id']);
 $stmt->execute();
     $res = $stmt->fetchAll();
 
     if(!empty($_POST)){
+
+      
         $id = $_POST['id'];
         $name = $_POST['name'];
         $email = $_POST['email'];
+        $password = $_POST['password'];
 
-        if(empty($_POST['role'])){
-            $role = 0;
+        if(empty($name) || empty($email)){
+          if(empty($name)){
+            $nameError = ' * Fill name';
+          }
+          
+          if(empty($email)){
+            $emailError = ' * Fill email';
+          }
+          
+        }elseif(!empty($password) && strlen($password) < 4  ){
+          if(strlen($password) < 4) {
+            $passwordError = '* Password must be at least 4 ';
+          }
         }else{
+
+          if(empty($_POST['role'])){
+            $role = 0;
+          }else{
             $role = 1;
         }
       
-        
+              if($password != null){
+                $sql = $pdo->prepare("UPDATE users SET name='$name',email='$email',password='$password',role='$role' WHERE id = '$id' ");
+
+              }else{
                 $sql = $pdo->prepare("UPDATE users SET name='$name',email='$email',role='$role' WHERE id = '$id' ");
+              }
+                
                 $result = $sql->execute();
 
                 if($result){
                     echo "<script>alert('Update Successfully ');window.location.href='userlist.php'; </script>";
                 }
             
+
+
+        }
+
 
     }
 
@@ -58,12 +88,22 @@ $stmt->execute();
                 <form action="" method="post" enctype="multipart/form-data" > 
                     <input type="hidden" name="id" value="<?php echo $res[0]['id']?>">
                     <div class="form-group">
-                        <label for="">Title</label><br>
-                        <input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']?>" required>
+                        <label for="">Name</label><br>
+                        <p style="color:red;"><?php echo empty($nameError) ? '' : $nameError; ?></p>
+                        <input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']?>" >
                     </div>
                     <div class="form-group">
-                        <label for="">Content</label><br>
-                        <input type="email" class="form-control" name="email" value="<?php echo $res[0]['email']?>" required>
+                        <label for="">Email</label><br>
+                             
+                        <p style="color:red;"><?php echo empty($emailError) ? '' : $emailError; ?></p>
+                
+                        <input type="email" class="form-control" name="email" value="<?php echo $res[0]['email']?>" >
+                    </div>
+                    <div class="form-group">
+                        <label for="">Password</label><br>
+                        <span style="font-size:10px; color:red;">Change your password ! </span>
+                        <p style="color:red;"><?php echo empty($passwordError) ? '' : $passwordError; ?></p>
+                        <input type="password" class="form-control" name="password" >
                     </div>
                     <div class="form-group">    
                         <div class="custom-control custom-checkbox">
