@@ -5,7 +5,7 @@
 
 session_start();
 require "../config/config.php";
-
+require "../config/common.php";
 
 if(!empty($_POST)){
   
@@ -100,7 +100,8 @@ if(!empty($_POST)){
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form class="form-horizontal" action="register.php" method="post"> 
+              <form class="form-horizontal" action="register.php" method="post">
+              <input name="token" type="hidden" value="<?php echo $_SESSION['token']; ?>"> 
                 <div class="card-body">
                     <div class="form-group row">
                     <p style="color:red;"><?php echo empty($nameError) ? '' : $nameError; ?></p>

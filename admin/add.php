@@ -3,9 +3,12 @@
 
 session_start();
 require "../config/config.php";
+require "../config/common.php";
 
 
 if(!empty($_POST)){
+
+  
 
   if(empty($_POST['title']) || empty($_POST['title']) || empty($_FILES['image']['name'])){
     if(empty($_POST['title'])){
@@ -72,6 +75,8 @@ if(!empty($_POST)){
                
 
                 <form action="add.php" method="post" enctype="multipart/form-data" > 
+                <input name="token" type="hidden" value="<?php echo $_SESSION['token']; ?>">
+
                     <div class="form-group">
                         <label for="">Title</label><br>
                         <p style="color:red;"><?php echo empty($titleError) ? '' : $titleError; ?></p>

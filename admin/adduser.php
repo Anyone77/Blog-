@@ -88,6 +88,7 @@ if(!empty($_POST)){
                
 
                 <form action="adduser.php" method="post" enctype="multipart/form-data" > 
+                <input name="token" type="hidden" value="<?php echo $_SESSION['token']; ?>">
                     <div class="form-group">
                         <label for="">Name</label><br>
                         <p style="color:red;"><?php echo empty($nameError) ? '' : $nameError; ?></p>

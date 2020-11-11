@@ -3,6 +3,7 @@
 
 session_start();
 require "../config/config.php";
+require "../config/common.php";
 
 
 if($_SESSION['role'] != 1){
@@ -86,6 +87,7 @@ $stmt->execute();
                
 
                 <form action="" method="post" enctype="multipart/form-data" > 
+                <input name="token" type="hidden" value="<?php echo $_SESSION['token']; ?>">
                     <input type="hidden" name="id" value="<?php echo $res[0]['id']?>">
                     <div class="form-group">
                         <label for="">Title</label><br>

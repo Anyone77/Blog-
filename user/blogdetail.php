@@ -2,6 +2,7 @@
 <?php
 session_start();
 require "../config/config.php";
+require "../config/common.php";
 
     $stmt = $pdo->prepare("SELECT * FROM posts WHERE id =".$_GET['id']);
     $stmt->execute();
@@ -178,6 +179,7 @@ require "../config/config.php";
               <!-- /.card-footer -->
               <div class="card-footer">
                 <form action="" method="post">
+                <input name="token" type="hidden" value="<?php echo $_SESSION['token']; ?>">
                   <img class="img-fluid img-circle img-sm" src="../dist/img/user4-128x128.jpg" alt="Alt Text">
                   <!-- .img-push is used to add margin to elements next to floating images -->
                   <div class="img-push">
