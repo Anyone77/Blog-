@@ -95,7 +95,7 @@ require "../config/common.php";
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6" style="float: none !important;">
-            <h1><?php echo $res[0]['title'] ?></h1>
+            <h1><?php echo escape($res[0]['title']) ?></h1>
           </div>
           
         </div>
@@ -128,11 +128,11 @@ require "../config/common.php";
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <img class="img-fluid pad" src="../admin/images/<?php echo $res[0]['image'] ?>" alt="Photo" style="width: 100% !important;">
+                <img class="img-fluid pad" src="../admin/images/<?php echo escape($res[0]['image'] )?>" alt="Photo" style="width: 100% !important;">
 
                 <br><br><br>
 
-                <p><?php echo $res[0]['content'] ?></p><br>
+                <p><?php echo escape($res[0]['content']) ?></p><br>
 
                 <h3>Comment</h3><br><hr>
                 <a href="index.php" type="button" class="btn btn-primary">Go Back</a>
@@ -160,7 +160,7 @@ require "../config/common.php";
                       <h4><b><?php print_r($showUser[$key][0]['name']) ; ?></b> </h4>
                       <span class="text-muted float-right"><?php echo $value['created_at'] ?></span>
                     </span><!-- /.username -->
-                    <?php echo $value['content'] ?>
+                    <?php echo escape($value['content']) ?>
                   </div>
 
 

@@ -3,6 +3,8 @@
 
 session_start();
 require "../config/config.php";
+require "../config/common.php";
+
 
 if(empty($_SESSION['user_id'] && $_SESSION['logged_in'])){
   
@@ -101,7 +103,7 @@ if(empty($_SESSION['user_id'] && $_SESSION['logged_in'])){
             <!-- Box Comment -->
             <div class="card card-widget">
               <div class="card-header">
-                <h4 ><?php echo $value['title'] ?></h4>
+                <h4 ><?php echo escape($value['title'] )?></h4>
                
                
               </div>
@@ -109,7 +111,7 @@ if(empty($_SESSION['user_id'] && $_SESSION['logged_in'])){
               <div class="card-body">
                  
                 <a href="blogdetail.php?id=<?php echo $value['id'] ?>">
-                    <img style="height:200px !important ;" class="img-fluid pad" src="../admin/images/<?php echo $value['image'] ?>" alt="Photo">
+                    <img style="height:200px !important ;" class="img-fluid pad" src="../admin/images/<?php echo escape($value['image']) ?>" alt="Photo">
                 </a>
                 <!-- <p>I took this photo this morning. What do you guys think?</p> -->
                 

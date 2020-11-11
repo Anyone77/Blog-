@@ -88,20 +88,20 @@ $stmt->execute();
 
                 <form action="" method="post" enctype="multipart/form-data" > 
                 <input name="token" type="hidden" value="<?php echo $_SESSION['token']; ?>">
-                    <input type="hidden" name="id" value="<?php echo $res[0]['id']?>">
+                    <input type="hidden" name="id" value="<?php echo escape($res[0]['id'])?>">
                     <div class="form-group">
                         <label for="">Title</label><br>
                         <p style="color:red;"><?php echo empty($titleError) ? '' : $titleError; ?></p>
-                        <input type="text" class="form-control" name="title" value="<?php echo $res[0]['title']?>" >
+                        <input type="text" class="form-control" name="title" value="<?php echo escape($res[0]['title'])?>" >
                     </div>
                     <div class="form-group">
                         <label for="">Content</label><br>
                         <p style="color:red;"><?php echo empty($contentError) ? '' : $contentError; ?></p>
-                        <textarea name="content" class="form-control" id="" cols="30" rows="10"><?php echo $res[0]['content']?></textarea>
+                        <textarea name="content" class="form-control" id="" cols="30" rows="10"><?php echo escape($res[0]['content']) ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Image</label><br>
-                        <img src="images/<?php echo $res[0]['image'] ?>" width="150" height="150" alt=""><br><br>
+                        <img src="images/<?php echo escape($res[0]['image']) ?>" width="150" height="150" alt=""><br><br>
                         <input type="file" name="image" >
                     </div>
                     <div class="form-group">

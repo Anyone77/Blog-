@@ -88,18 +88,18 @@ $stmt->execute();
 
                 <form action="" method="post" enctype="multipart/form-data" > 
                 <input name="token" type="hidden" value="<?php echo $_SESSION['token']; ?>">
-                    <input type="hidden" name="id" value="<?php echo $res[0]['id']?>">
+                    <input type="hidden" name="id" value="<?php echo escape($res[0]['id'])?>">
                     <div class="form-group">
                         <label for="">Name</label><br>
                         <p style="color:red;"><?php echo empty($nameError) ? '' : $nameError; ?></p>
-                        <input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']?>" >
+                        <input type="text" class="form-control" name="name" value="<?php echo escape($res[0]['name'])?>" >
                     </div>
                     <div class="form-group">
                         <label for="">Email</label><br>
                              
                         <p style="color:red;"><?php echo empty($emailError) ? '' : $emailError; ?></p>
                 
-                        <input type="email" class="form-control" name="email" value="<?php echo $res[0]['email']?>" >
+                        <input type="email" class="form-control" name="email" value="<?php echo escape($res[0]['email'])?>" >
                     </div>
                     <div class="form-group">
                         <label for="">Password</label><br>

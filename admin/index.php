@@ -3,6 +3,8 @@
 
   session_start();
   require "../config/config.php";
+  require "../config/common.php";
+
 
   if(empty($_SESSION['user_id'] && $_SESSION['logged_in'])){
     
@@ -104,9 +106,9 @@
 
                     <tr>
                       <td><?php echo $i; ?></td>
-                      <td><?php echo $value['title'] ?></td>
+                      <td><?php echo escape($value['title']) ?></td>
                       <td>
-                      <?php echo substr($value['content'],0,50) ?>
+                      <?php echo escape(substr($value['content'],0,50)) ?>
                       </td>
                       <td class="btn-group">
 
